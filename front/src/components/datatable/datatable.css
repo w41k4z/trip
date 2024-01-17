@@ -1,0 +1,20 @@
+.datatable-top {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0 10px 10px;
+    align-items: center;
+    height: fit-content;
+}
+
+.datatable {
+    border: 1px outset transparent;
+    border-radius: 10px;
+}
+
+.datatable-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    padding: 10px 0 10px 0;
+}
