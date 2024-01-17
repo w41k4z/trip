@@ -1,5 +1,6 @@
 export const formatNumberToCurrency = (amount: number): string => {
-  if (amount == null || amount === 0) {
+  // eslint-disable-next-line eqeqeq
+  if (amount == null || amount == 0) {
     return "0,00";
   }
 

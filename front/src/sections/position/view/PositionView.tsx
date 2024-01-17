@@ -1,10 +1,10 @@
 import GenericTable from "../../../components/datatable/GenericTable";
 import { tableAction } from "../table-action";
 import { tableColumns } from "../table-column";
-import useGrade from "../useGrade";
+import usePosition from "../usePosition";
 
-const GradeView = () => {
-  const { grades, loading } = useGrade();
+const PositionView = () => {
+  const { positions, loading } = usePosition();
 
   return (
     <>
@@ -14,13 +14,13 @@ const GradeView = () => {
         <GenericTable
           hasAction={tableAction}
           indexedRow
-          title="Les grades"
+          title="Les postes"
           columns={tableColumns}
-          data={grades}
+          data={positions}
         />
       )}
     </>
   );
 };
 
-export default GradeView;
+export default PositionView;

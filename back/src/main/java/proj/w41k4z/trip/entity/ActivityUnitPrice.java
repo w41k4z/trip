@@ -1,6 +1,6 @@
 package proj.w41k4z.trip.entity;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import proj.w41k4z.orm.annotation.Column;
 import proj.w41k4z.orm.annotation.Entity;
@@ -23,7 +23,7 @@ public class ActivityUnitPrice extends Repository<ActivityUnitPrice, Long> {
     private Double unitPrice;
 
     @Column(name = "from_date")
-    private Date fromDate;
+    private Timestamp fromDate;
 
     public Long getId() {
         return id;
@@ -49,11 +49,11 @@ public class ActivityUnitPrice extends Repository<ActivityUnitPrice, Long> {
         this.unitPrice = unitPrice;
     }
 
-    public Date getFromDate() {
+    public Timestamp getFromDate() {
         return fromDate;
     }
 
-    public void setFromDate(Date fromDate) {
+    public void setFromDate(Timestamp fromDate) {
         this.fromDate = fromDate;
     }
 }

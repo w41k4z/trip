@@ -1,6 +1,6 @@
 package proj.w41k4z.trip.entity;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import proj.w41k4z.orm.annotation.Column;
 import proj.w41k4z.orm.annotation.Entity;
@@ -8,21 +8,21 @@ import proj.w41k4z.orm.annotation.Generated;
 import proj.w41k4z.orm.annotation.Id;
 import proj.w41k4z.orm.database.Repository;
 
-@Entity(table = "employee_hourly_wage")
-public class EmployeeHourlyWage extends Repository<EmployeeHourlyWage, Long> {
+@Entity(table = "hourly_wage")
+public class HourlyWage extends Repository<HourlyWage, Long> {
 
     @Id
     @Column
     @Generated
     private Long id;
 
-    @Column(name = "salary_date")
-    private Date salaryDate;
+    @Column(name = "from_date")
+    private Timestamp fromDate;
 
-    @Column(name = "employee_id")
-    private Long employeeId;
+    @Column(name = "position_id")
+    private Long positionId;
 
-    @Column(name = "salary")
+    @Column
     private Double salary;
 
     public Long getId() {
@@ -33,20 +33,20 @@ public class EmployeeHourlyWage extends Repository<EmployeeHourlyWage, Long> {
         this.id = id;
     }
 
-    public Date getSalaryDate() {
-        return salaryDate;
+    public Timestamp getFromDate() {
+        return fromDate;
     }
 
-    public void setSalaryDate(Date salaryDate) {
-        this.salaryDate = salaryDate;
+    public void setFromDate(Timestamp fromDate) {
+        this.fromDate = fromDate;
     }
 
-    public Long getEmployeeId() {
-        return employeeId;
+    public Long getPositionId() {
+        return positionId;
     }
 
-    public void setEmployeeId(Long employeeId) {
-        this.employeeId = employeeId;
+    public void setPositionId(Long positionId) {
+        this.positionId = positionId;
     }
 
     public Double getSalary() {

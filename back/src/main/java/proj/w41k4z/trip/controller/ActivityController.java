@@ -10,7 +10,7 @@ import proj.w41k4z.orm.database.connectivity.DatabaseConnection;
 import proj.w41k4z.trip.entity.Activity;
 import proj.w41k4z.trip.entity.ActivityUnitPrice;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,7 +45,7 @@ public class ActivityController {
 
         activityPrice.setActivityId(Long.parseLong(jsonData.get("activityId").toString()));
         activityPrice.setUnitPrice(Double.parseDouble(jsonData.get("unitPrice").toString()));
-        activityPrice.setFromDate(new Date(System.currentTimeMillis()));
+        activityPrice.setFromDate(new Timestamp(System.currentTimeMillis()));
         activityPrice.create(connection);
         connection.commit();
         connection.close();

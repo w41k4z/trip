@@ -24,10 +24,10 @@ public class StockMovement extends Repository<StockMovement, Long> {
     @Column(name = "activity_id")
     private Activity activity;
 
-    @Column(name = "in_quantity")
+    @Column(name = "in_quantity", nullable = true)
     private Integer inQuantity;
 
-    @Column(name = "out_quantity")
+    @Column(name = "out_quantity", nullable = true)
     private Integer outQuantity;
 
     public Long getId() {

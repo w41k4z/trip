@@ -2,30 +2,59 @@ CREATE VIEW activities AS
 SELECT 
     activity.*,
     COALESCE(activity_unit_price.unit_price, 0.) AS unit_price,
-    MAX(COALESCE(activity_unit_price.from_date, NOW())) AS from_date
+    COALESCE(aup.from_date, NOW()) AS from_date
 FROM activity
+LEFT JOIN (
+    SELECT 
+        activity_unit_price.activity_id,
+        MAX(activity_unit_price.from_date) AS from_date
+    FROM activity_unit_price
+    GROUP BY
+        activity_unit_price.activity_id
+) AS aup
+    ON activity.id = aup.activity_id
 LEFT JOIN activity_unit_price
-    ON activity.id = activity_unit_price.activity_id
-GROUP BY
-    activity.id,
-    activity.name,
-    activity.description,
-    activity_unit_price.unit_price
+    ON activity_unit_price.activity_id = aup.activity_id
+    AND activity_unit_price.from_date = aup.from_date
+;
+
+CREATE VIEW employee_salaries AS
+SELECT
+    employee.*,
+    COALESCE(hourly_wage.salary, 0.) AS salary,
+    COALESCE(hw.from_date, NOW()) AS from_date
+FROM employee
+JOIN position_grade 
+    ON position_grade.id = employee.position_grade_id
+JOIN position 
+    ON position.id = position_grade.position_id
+LEFT JOIN (
+    SELECT 
+        hourly_wage.position_id,
+        MAX(hourly_wage.from_date) AS from_date
+    FROM hourly_wage
+    GROUP BY
+        hourly_wage.position_id
+) AS hw
+    ON hw.position_id = position.id
+LEFT JOIN hourly_wage 
+    ON hourly_wage.position_id = hw.position_id
+    AND hourly_wage.from_date = hw.from_date
 ;
 
 CREATE VIEW employees AS
 SELECT 
     employee.*,
-    MAX(employee_hourly_wage.salary_date) AS salary_date,
-    employee_hourly_wage.salary
+    CONCAT(position.name, ' ', position_grade.grade) AS position_grade,
+    (employee_salaries.salary + (employee_salaries.salary * position_grade.increase)) AS salary,
+    employee_salaries.from_date
 FROM employee
-JOIN employee_hourly_wage
-    ON employee.id = employee_hourly_wage.employee_id
-GROUP BY
-    employee.id,
-    employee.name,
-    employee.first_name,
-    employee_hourly_wage.salary
+JOIN employee_salaries
+    ON employee_salaries.id = employee.id
+JOIN position_grade
+    ON employee.position_grade_id = position_grade.id
+JOIN position
+    ON position_grade.position_id = position.id
 ;
 
 CREATE VIEW travel_activities AS
@@ -52,9 +81,10 @@ JOIN travel_category
 JOIN subscription_tier 
     ON subscription_tier.id = travel.subscription_tier_id
 JOIN tier_activity 
-    ON tier_activity.subscription_tier_id = subscription_tier.id
-JOIN activities 
-    ON activities.id = tier_activity.activity_id;
+    ON tier_activity.id = travel_activity.tier_activity_id
+RIGHT JOIN activities 
+    ON activities.id = tier_activity.activity_id
+;
 
 CREATE VIEW travel_employee_salaries AS
 SELECT 

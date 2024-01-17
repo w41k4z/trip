@@ -33,24 +33,31 @@ CREATE TABLE duration (
     label VARCHAR(100) NOT NULL UNIQUE
 );
 
-CREATE TABLE grade (
+CREATE TABLE position (
     id SERIAL PRIMARY KEY,
-    name varchar(50) NOT NULL,
-    increase DOUBLE PRECISION DEFAULT 0.
+    name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE hourly_wage (
+    id SERIAL PRIMARY KEY,
+    from_date TIMESTAMP NOT NULL,
+    position_id INTEGER REFERENCES position(id),
+    salary DOUBLE PRECISION DEFAULT 0. 
+);
+
+CREATE TABLE position_grade (
+    id SERIAL PRIMARY KEY,
+    position_id INTEGER REFERENCES position(id) NOT NULL,
+    grade varchar(50) NOT NULL,
+    increase DOUBLE PRECISION DEFAULT 0., -- 0 -> 1 (100%)
+    CONSTRAINT unique_position_grade UNIQUE (position_id, grade)
 );
 
 CREATE TABLE employee (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     first_name VARCHAR(50),
-    grade_id INTEGER REFERENCES grade(id) NOT NULL
-);
-
-CREATE TABLE employee_hourly_wage (
-    id SERIAL PRIMARY KEY,
-    salary_date DATE NOT NULL,
-    employee_id INTEGER REFERENCES employee(id),
-    salary DOUBLE PRECISION DEFAULT 0. 
+    position_grade_id INTEGER REFERENCES position_grade(id) NOT NULL
 );
 
 CREATE TABLE travel_category (

@@ -12,6 +12,7 @@ import proj.w41k4z.orm.database.connectivity.ConnectionManager;
 import proj.w41k4z.orm.database.connectivity.DatabaseConnection;
 import proj.w41k4z.trip.entity.Travel;
 import proj.w41k4z.trip.entity.TravelCategory;
+import proj.w41k4z.trip.entity.TravelEmployee;
 import proj.w41k4z.trip.entity.TravelView;
 import proj.w41k4z.trip.entity.Duration;
 import proj.w41k4z.trip.entity.SubscriptionTier;
@@ -46,6 +47,20 @@ public class TravelController {
         travel.setSubscriptionTier(subscriptionTier);
         travel.setSalePrice(Double.parseDouble(jsonData.get("salePrice").toString()));
         travel.create(connection);
+        connection.commit();
+        connection.close();
+    }
+
+    @PostMapping("/employees")
+    public void addEmployee(@RequestBody Map<String, Object> jsonData) throws Exception {
+        DatabaseConnection connection = ConnectionManager.getDatabaseConnection();
+        TravelEmployee travelEmployee = new TravelEmployee();
+
+        travelEmployee.setTravelId((Long) jsonData.get("travelId"));
+        travelEmployee.setEmployeeId((Long) jsonData.get("employeeId"));
+        travelEmployee.setDuration((Double) jsonData.get("duration"));
+
+        travelEmployee.create(connection);
         connection.commit();
         connection.close();
     }

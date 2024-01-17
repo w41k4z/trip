@@ -1,4 +1,4 @@
-export type GradeType = {
+export type PositionType = {
   id: number;
   name: string;
 };

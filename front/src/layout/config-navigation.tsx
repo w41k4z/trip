@@ -63,8 +63,8 @@ export const navConfig: NavElement[] = [
         onItemClick: () => {},
       },
       {
-        title: "Grade",
-        path: "/grade",
+        title: "Poste",
+        path: "/position",
         icon: <RxPaperPlane />,
         onItemClick: () => {},
       },

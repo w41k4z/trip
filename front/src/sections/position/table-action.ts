@@ -1,21 +1,21 @@
 import { TableActionType } from "../../components/datatable/GenericTable";
-import { addGrade } from "./logic";
+import { addPosition } from "./logic";
 
 export const tableAction: TableActionType = {
   addAction: {
-    formTitle: "Ajouter une nouvelle durée",
+    formTitle: "Ajouter une nouvelle poste",
     fields: [
       {
         name: "name",
         type: "text",
         label: "Nom",
         options: {
-          required: "Le nom d'un nouveau grade est obligatoire",
+          required: "Le nom d'une nouvelle poste est obligatoire",
         },
       },
     ],
     onSubmit: async (data) => {
-      addGrade(data);
+      addPosition(data);
     },
   },
   hasFeature: {

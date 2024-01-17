@@ -2,7 +2,6 @@ package proj.w41k4z.trip.entity;
 
 import proj.w41k4z.orm.annotation.Column;
 import proj.w41k4z.orm.annotation.Entity;
-import proj.w41k4z.orm.annotation.Id;
 import proj.w41k4z.orm.annotation.ReadOnly;
 import proj.w41k4z.orm.database.Repository;
 
@@ -10,7 +9,6 @@ import proj.w41k4z.orm.database.Repository;
 @ReadOnly
 public class TravelActivitiesView extends Repository<TravelActivitiesView, Long> {
 
-    @Id
     @Column
     private Long id;
 

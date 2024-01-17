@@ -11,4 +11,14 @@ export const tableColumns: Column[] = [
     propTarget: "firstName",
     format: "default",
   },
+  {
+    name: "Poste",
+    propTarget: "positionGrade",
+    format: "default",
+  },
+  {
+    name: "Salaire horaire",
+    propTarget: "salary",
+    format: "currency",
+  },
 ];

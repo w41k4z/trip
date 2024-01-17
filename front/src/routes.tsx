@@ -13,7 +13,7 @@ export const TravelCategoryPage = lazy(() => import("./pages/TravelCategory"));
 export const TravelPage = lazy(() => import("./pages/Travel"));
 export const TravelActivityPage = lazy(() => import("./pages/TravelActivity"));
 export const MovementPage = lazy(() => import("./pages/Movement"));
-export const GradePage = lazy(() => import("./pages/Grade"));
+export const PositionPage = lazy(() => import("./pages/Position"));
 export const EmployeePage = lazy(() => import("./pages/Employee"));
 
 export default function Router() {
@@ -57,8 +57,8 @@ export default function Router() {
           element: <TravelActivityPage />,
         },
         {
-          path: "grade",
-          element: <GradePage />,
+          path: "position",
+          element: <PositionPage />,
         },
         {
           path: "employee",

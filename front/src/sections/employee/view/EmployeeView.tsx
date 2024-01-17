@@ -4,11 +4,14 @@ import { tableColumns } from "../table-column";
 import useEmployee from "../useEmployee";
 
 const GradeView = () => {
-  const { grades, employees, loading } = useEmployee();
+  const { positionGrades, employees, loading } = useEmployee();
 
-  let employeeOptions: [string, string][] = [["-1", "Choose"]];
-  employees.map((employee) =>
-    employeeOptions.push([employee.id.toString(), employee.name])
+  let positionGradesOptions: [string, string][] = [["-1", "Choose"]];
+  positionGrades.map((positionGrade) =>
+    positionGradesOptions.push([
+      positionGrade.id.toString(),
+      positionGrade.position.name + " " + positionGrade.grade,
+    ])
   );
 
   return (
@@ -17,11 +20,11 @@ const GradeView = () => {
         <div>Loading...</div>
       ) : (
         <GenericTable
-          hasAction={tableAction(employeeOptions)}
+          hasAction={tableAction(positionGradesOptions)}
           indexedRow
-          title="Les grades"
+          title="Les employés"
           columns={tableColumns}
-          data={grades}
+          data={employees}
         />
       )}
     </>

@@ -20,8 +20,8 @@ public class Employee extends Repository<Employee, Long> {
     @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "grade_id")
-    private Long gradeId;
+    @Column(name = "position_grade_id")
+    private Long positionGradeId;
 
     public Long getId() {
         return id;
@@ -47,11 +47,11 @@ public class Employee extends Repository<Employee, Long> {
         this.firstName = firstName;
     }
 
-    public Long getGradeId() {
-        return gradeId;
+    public Long getPositionGradeId() {
+        return positionGradeId;
     }
 
-    public void setGradeId(Long gradeId) {
-        this.gradeId = gradeId;
+    public void setPositionGradeId(Long positionGradeId) {
+        this.positionGradeId = positionGradeId;
     }
 }

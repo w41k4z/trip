@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import proj.w41k4z.orm.database.connectivity.ConnectionManager;
 import proj.w41k4z.orm.database.connectivity.DatabaseConnection;
 import proj.w41k4z.trip.entity.Employee;
+import proj.w41k4z.trip.entity.EmployeeView;
 
 import java.util.Map;
 
@@ -18,9 +19,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class EmployeeController {
 
     @GetMapping
-    public Employee[] list() throws Exception {
+    public EmployeeView[] list() throws Exception {
         DatabaseConnection connection = ConnectionManager.getDatabaseConnection();
-        Employee[] employees = new Employee().findAll(connection);
+        EmployeeView[] employees = new EmployeeView().findAll(connection);
         connection.close();
         return employees;
     }
@@ -31,7 +32,7 @@ public class EmployeeController {
         Employee employee = new Employee();
         employee.setName((String) jsonData.get("name"));
         employee.setFirstName((String) jsonData.get("firstName"));
-        employee.setGradeId(Long.valueOf(jsonData.get("gradeId").toString()));
+        employee.setPositionGradeId(Long.valueOf(jsonData.get("positionGradeId").toString()));
         employee.create(connection);
         connection.commit();
         connection.close();

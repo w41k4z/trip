@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { fetchData } from "./logic";
 import { EmployeeType } from "./employee";
-import useGrade from "../grade/useGrade";
+import usePosition from "../position/usePosition";
 
 const useEmployee = () => {
-  const { grades } = useGrade();
+  const { positionGrades } = usePosition();
   const [employees, setEmployees] = useState<EmployeeType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
@@ -14,7 +14,7 @@ const useEmployee = () => {
     });
   }, []);
 
-  return { grades, employees, loading };
+  return { positionGrades, employees, loading };
 };
 
 export default useEmployee;
