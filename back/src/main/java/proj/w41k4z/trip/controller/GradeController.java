@@ -11,12 +11,10 @@ import proj.w41k4z.trip.entity.Grade;
 
 import java.util.Map;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequestMapping("/grades")
-@CrossOrigin(origins = { "http://localhost:3000" })
 public class GradeController {
 
     @GetMapping

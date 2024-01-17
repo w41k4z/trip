@@ -12,12 +12,10 @@ import proj.w41k4z.trip.entity.EmployeeHourlyWage;
 import java.util.Map;
 import java.sql.Date;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequestMapping("/employees/salary")
-@CrossOrigin(origins = { "http://localhost:3000" })
 public class EmployeeHourlyWageController {
 
     @GetMapping

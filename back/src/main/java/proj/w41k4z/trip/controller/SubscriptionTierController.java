@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +16,6 @@ import proj.w41k4z.trip.entity.SubscriptionTier;
 
 @RestController
 @RequestMapping("/subscription-tiers")
-@CrossOrigin(origins = { "http://localhost:3000" })
 public class SubscriptionTierController {
 
     @GetMapping

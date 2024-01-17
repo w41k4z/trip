@@ -3,7 +3,6 @@ package proj.w41k4z.trip.controller;
 import java.sql.Timestamp;
 import java.util.Map;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +20,6 @@ import proj.w41k4z.trip.entity.TravelActivityStockStateView;
 
 @RestController
 @RequestMapping("/stock-movements")
-@CrossOrigin(origins = "http://localhost:3000")
 public class StockMovementController {
 
     @PostMapping("/in")

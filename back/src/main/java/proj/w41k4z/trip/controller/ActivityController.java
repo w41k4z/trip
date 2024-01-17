@@ -13,12 +13,10 @@ import proj.w41k4z.trip.entity.ActivityUnitPrice;
 import java.sql.Date;
 import java.util.Map;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequestMapping("/activities")
-@CrossOrigin(origins = { "http://localhost:3000" })
 public class ActivityController {
 
     @GetMapping
