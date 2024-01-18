@@ -7,7 +7,7 @@ export const tableAction = (
 ) => {
   const result: TableActionType = {
     addAction: {
-      formTitle: "Ajouter un nouveau grade à un poste",
+      formTitle: "Ajouter un nouveau employé à un voyage",
       fields: [
         {
           name: "travelId",

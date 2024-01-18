@@ -5,7 +5,7 @@ const Duration = () => {
   return (
     <>
       <Helmet>
-        <title>Mouvement</title>
+        <title>Mouvements</title>
       </Helmet>
       <MovementView />
     </>

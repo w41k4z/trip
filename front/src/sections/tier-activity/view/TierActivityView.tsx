@@ -43,7 +43,7 @@ const TierActivityView = () => {
         <GenericTable
           hasAction={tableAction(subscriptionTierOptions, activityOptions)}
           indexedRow
-          title="Les bouquets"
+          title="Les activités des bouquets"
           columns={tableColumns}
           data={currentTierActivities}
         />

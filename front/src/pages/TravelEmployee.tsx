@@ -5,7 +5,7 @@ const TravelEmployee = () => {
   return (
     <>
       <Helmet>
-        <title>Employé de voyage</title>
+        <title>Employés de voyage</title>
       </Helmet>
       <TravelEmployeeView />
     </>
