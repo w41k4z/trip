@@ -1,34 +1,35 @@
 import { TableActionType } from "../../components/datatable/GenericTable";
-import { addPositionGrade } from "./logic";
+import { addTravelEmployee } from "./logic";
 
-export const tableAction = (positionOptions: [string, string][]) => {
+export const tableAction = (
+  travelOptions: [string, string][],
+  employeeOptions: [string, string][]
+) => {
   const result: TableActionType = {
     addAction: {
       formTitle: "Ajouter un nouveau grade à un poste",
       fields: [
         {
-          name: "positionId",
-          label: "Poste",
+          name: "travelId",
+          label: "Voyage",
           type: "select",
-          selectValues: positionOptions,
+          selectValues: travelOptions,
         },
         {
-          name: "grade",
-          label: "Grade",
-          type: "text",
-          options: {
-            required: "Le grade est requis",
-          },
+          name: "employeeId",
+          label: "Employée",
+          type: "select",
+          selectValues: employeeOptions,
         },
         {
-          name: "increase",
-          label: "Majoration (x 100%)",
+          name: "duration",
+          label: "Durée (heure)",
           type: "number",
           step: "0.01",
         },
       ],
       onSubmit: async (data) => {
-        addPositionGrade(data);
+        addTravelEmployee(data);
       },
     },
     hasFeature: {

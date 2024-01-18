@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/positions")
@@ -26,6 +27,14 @@ public class PositionController {
         Position[] positions = new Position().findAll(connection);
         connection.close();
         return positions;
+    }
+
+    @GetMapping("/{id}")
+    public Position one(@PathVariable Long id) throws Exception {
+        DatabaseConnection connection = ConnectionManager.getDatabaseConnection();
+        Position position = new Position().findById(connection, id);
+        connection.close();
+        return position;
     }
 
     @GetMapping("/grades")
@@ -51,11 +60,11 @@ public class PositionController {
         DatabaseConnection connection = ConnectionManager.getDatabaseConnection();
         PositionGrade grade = new PositionGrade();
         Position position = new Position();
-        position.setId((Long) jsonData.get("positionId"));
+        position.setId(Long.parseLong(jsonData.get("positionId").toString()));
 
         grade.setPosition(position);
         grade.setGrade((String) jsonData.get("grade"));
-        grade.setIncrease((Double) jsonData.get("increase"));
+        grade.setIncrease(Double.parseDouble(jsonData.get("increase").toString()));
 
         grade.create(connection);
         connection.commit();
@@ -67,8 +76,8 @@ public class PositionController {
         DatabaseConnection connection = ConnectionManager.getDatabaseConnection();
         HourlyWage hourlyWage = new HourlyWage();
 
-        hourlyWage.setPositionId((Long) jsonData.get("positionId"));
-        hourlyWage.setSalary((Double) jsonData.get("salary"));
+        hourlyWage.setPositionId(Long.parseLong(jsonData.get("positionId").toString()));
+        hourlyWage.setSalary(Double.parseDouble(jsonData.get("salary").toString()));
         hourlyWage.setFromDate(new Timestamp(System.currentTimeMillis()));
 
         hourlyWage.create(connection);

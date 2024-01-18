@@ -1,5 +1,5 @@
 export type TravelActivityType = {
-  id: number;
+  travelId: number;
   activity: string;
   travel: string;
   duration: string;

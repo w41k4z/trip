@@ -51,6 +51,24 @@ export const navConfig: NavElement[] = [
         onItemClick: () => {},
       },
       {
+        title: "Poste",
+        path: "/position",
+        icon: <RxPaperPlane />,
+        onItemClick: () => {},
+      },
+      {
+        title: "Grade",
+        path: "/position-grade",
+        icon: <RxPaperPlane />,
+        onItemClick: () => {},
+      },
+      {
+        title: "Employé",
+        path: "/employee",
+        icon: <RxPaperPlane />,
+        onItemClick: () => {},
+      },
+      {
         title: "Voyage",
         path: "/voyage",
         icon: <RxPaperPlane />,
@@ -63,14 +81,8 @@ export const navConfig: NavElement[] = [
         onItemClick: () => {},
       },
       {
-        title: "Poste",
-        path: "/position",
-        icon: <RxPaperPlane />,
-        onItemClick: () => {},
-      },
-      {
-        title: "Employé",
-        path: "/employee",
+        title: "Employé de voyage",
+        path: "/employés-voyage",
         icon: <RxPaperPlane />,
         onItemClick: () => {},
       },

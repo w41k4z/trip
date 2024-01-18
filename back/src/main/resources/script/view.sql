@@ -59,10 +59,8 @@ JOIN position
 
 CREATE VIEW travel_activities AS
 SELECT
-    travel_activity.id,
-    activities.id AS activity_id,
-    activities.name AS activity_name,
-    travel_activity.travel_id, 
+    ROW_NUMBER() OVER(ORDER BY travel.id) AS row_number,
+    travel.id AS travel_id,
     travel.name AS travel_name,
     travel.duration_id,
     duration.label AS duration,
@@ -70,20 +68,34 @@ SELECT
     travel_category.category,
     travel.subscription_tier_id,
     subscription_tier.name AS subscription_tier_name,
+    activities.id AS activity_id,
+    activities.name AS activity_name,
     COALESCE(travel_activity.activity_count, 0) AS activity_count
-FROM travel_activity
-JOIN travel 
-    ON travel.id = travel_activity.travel_id
+FROM travel
 JOIN duration 
     ON duration.id = travel.duration_id
 JOIN travel_category 
     ON travel_category.id = travel.travel_category_id
-JOIN subscription_tier 
+JOIN subscription_tier
     ON subscription_tier.id = travel.subscription_tier_id
-JOIN tier_activity 
-    ON tier_activity.id = travel_activity.tier_activity_id
-RIGHT JOIN activities 
+JOIN tier_activity
+    ON tier_activity.subscription_tier_id = subscription_tier.id
+JOIN activities
     ON activities.id = tier_activity.activity_id
+LEFT JOIN travel_activity
+    ON travel_activity.travel_id = travel.id
+    AND travel_activity.tier_activity_id = tier_activity.id
+;
+
+CREATE VIEW total_travel_activities_price AS
+SELECT 
+    travel_id,
+    SUM(activity_count * unit_price) AS total_price
+FROM travel_activities
+JOIN activities
+    ON activities.id = travel_activities.activity_id
+GROUP BY
+    travel_id
 ;
 
 CREATE VIEW travel_employee_salaries AS
@@ -98,6 +110,15 @@ JOIN employees
     ON employees.id = travel_employee.employee_id
 ;
 
+CREATE VIEW total_travel_employee_salaries AS
+SELECT 
+    travel_id,
+    SUM(salary) AS total_salary
+FROM travel_employee_salaries
+GROUP BY
+    travel_id
+;
+
 CREATE VIEW travels AS
 SELECT 
     travel.id,
@@ -106,17 +127,13 @@ SELECT
     travel.travel_category_id,
     travel.subscription_tier_id,
     travel.sale_price,
-    SUM(COALESCE(travel_activities.activity_count, 0) * COALESCE(activities.unit_price, 0)) AS total_price,
-    travel.sale_price - SUM(COALESCE(travel_employee_salaries.salary, 0)) - (SUM(COALESCE(travel_activities.activity_count, 0) * COALESCE(activities.unit_price, 0))) AS profit
+    total_travel_activities_price.total_price + total_travel_employee_salaries.total_salary AS total_price,
+    travel.sale_price - total_travel_activities_price.total_price - total_travel_employee_salaries.total_salary AS profit
 FROM travel
-LEFT JOIN travel_activities
-    ON travel_activities.travel_id = travel.id
-LEFT JOIN activities 
-    ON activities.id = travel_activities.activity_id
-LEFT JOIN travel_employee_salaries
-    ON travel_employee_salaries.travel_id = travel.id
-GROUP BY
-    travel.id
+JOIN total_travel_activities_price
+    ON total_travel_activities_price.travel_id = travel.id
+JOIN total_travel_employee_salaries
+    ON total_travel_employee_salaries.travel_id = travel.id
 ;
 
 CREATE VIEW stock_state AS

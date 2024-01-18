@@ -2,6 +2,7 @@ package proj.w41k4z.trip.entity;
 
 import proj.w41k4z.orm.annotation.Column;
 import proj.w41k4z.orm.annotation.Entity;
+import proj.w41k4z.orm.annotation.Id;
 import proj.w41k4z.orm.annotation.ReadOnly;
 import proj.w41k4z.orm.database.Repository;
 
@@ -9,8 +10,12 @@ import proj.w41k4z.orm.database.Repository;
 @ReadOnly
 public class TravelActivitiesView extends Repository<TravelActivitiesView, Long> {
 
-    @Column
-    private Long id;
+    @Id
+    @Column(name = "row_number")
+    private Long rowId;
+
+    @Column(name = "travel_id")
+    private Long travelId;
 
     @Column(name = "activity_name")
     private String activity;
@@ -30,12 +35,20 @@ public class TravelActivitiesView extends Repository<TravelActivitiesView, Long>
     @Column(name = "activity_count")
     private Integer activityCount;
 
-    public Long getId() {
-        return id;
+    public Long getRowId() {
+        return rowId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setRowId(Long id) {
+        this.rowId = id;
+    }
+
+    public Long getTravelId() {
+        return travelId;
+    }
+
+    public void setTravelId(Long travelId) {
+        this.travelId = travelId;
     }
 
     public String getActivity() {

@@ -1,6 +1,5 @@
 import axios from "../../axios";
 import { PositionType } from "./position";
-import { PositionGradeType } from "../position-grade/positionGrade";
 
 export const fetchData = async (callBack: (data: PositionType[]) => void) => {
   await axios
@@ -18,6 +17,17 @@ export const addPosition = async (data: any) => {
     .post("/positions", data)
     .then((response) => {
       alert("Position added");
+    })
+    .catch((error) => {
+      alert(error);
+    });
+};
+
+export const addPositionHourlyWage = async (data: any) => {
+  await axios
+    .post("/positions/hourly-wage", data)
+    .then((response) => {
+      alert("Position hourly wage added");
     })
     .catch((error) => {
       alert(error);

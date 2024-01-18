@@ -2,13 +2,13 @@ import { Column } from "../../components/datatable/column";
 
 export const tableColumns: Column[] = [
   {
-    name: "Nom",
-    propTarget: "name",
+    name: "Grade",
+    propTarget: "grade",
     format: "default",
   },
   {
-    name: "Description",
-    propTarget: "description",
-    format: "default",
+    name: "Majoration (x 100%)",
+    propTarget: "increase",
+    format: "number",
   },
 ];

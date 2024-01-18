@@ -4,6 +4,7 @@ import proj.w41k4z.orm.annotation.Column;
 import proj.w41k4z.orm.annotation.Entity;
 import proj.w41k4z.orm.annotation.Generated;
 import proj.w41k4z.orm.annotation.Id;
+import proj.w41k4z.orm.annotation.relationship.OneToOne;
 import proj.w41k4z.orm.database.Repository;
 
 @Entity(table = "travel_employee")
@@ -17,8 +18,9 @@ public class TravelEmployee extends Repository<TravelEmployee, Long> {
     @Column(name = "travel_id")
     private Long travelId;
 
+    @OneToOne
     @Column(name = "employee_id")
-    private Long employeeId;
+    private EmployeeView employee;
 
     @Column
     private Double duration;
@@ -39,12 +41,12 @@ public class TravelEmployee extends Repository<TravelEmployee, Long> {
         this.travelId = travelId;
     }
 
-    public Long getEmployeeId() {
-        return employeeId;
+    public EmployeeView getEmployee() {
+        return employee;
     }
 
-    public void setEmployeeId(Long employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployee(EmployeeView employee) {
+        this.employee = employee;
     }
 
     public Double getDuration() {

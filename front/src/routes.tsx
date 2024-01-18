@@ -12,8 +12,10 @@ export const DurationPage = lazy(() => import("./pages/Duration"));
 export const TravelCategoryPage = lazy(() => import("./pages/TravelCategory"));
 export const TravelPage = lazy(() => import("./pages/Travel"));
 export const TravelActivityPage = lazy(() => import("./pages/TravelActivity"));
+export const TravelEmployeePage = lazy(() => import("./pages/TravelEmployee"));
 export const MovementPage = lazy(() => import("./pages/Movement"));
 export const PositionPage = lazy(() => import("./pages/Position"));
+export const PositionGradePage = lazy(() => import("./pages/PositionGrade"));
 export const EmployeePage = lazy(() => import("./pages/Employee"));
 
 export default function Router() {
@@ -57,8 +59,16 @@ export default function Router() {
           element: <TravelActivityPage />,
         },
         {
+          path: "employés-voyage",
+          element: <TravelEmployeePage />,
+        },
+        {
           path: "position",
           element: <PositionPage />,
+        },
+        {
+          path: "position-grade",
+          element: <PositionGradePage />,
         },
         {
           path: "employee",

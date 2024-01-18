@@ -17,7 +17,7 @@ CREATE TABLE activity_unit_price (
     id SERIAL PRIMARY KEY,
     activity_id INTEGER NOT NULL REFERENCES activity(id),
     unit_price DOUBLE PRECISION NOT NULL,
-    from_date DATE NOT NULL,
+    from_date TIMESTAMP NOT NULL,
     CONSTRAINT unique_activity_unit_price UNIQUE(activity_id, unit_price, from_date)
 );
 
