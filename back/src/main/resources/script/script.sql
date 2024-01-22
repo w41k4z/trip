@@ -93,7 +93,7 @@ CREATE TABLE stock_movement (
 	id serial PRIMARY KEY,
     action_date TIMESTAMP NOT NULL,
     activity_id INTEGER NOT NULL REFERENCES activity(id),
-	in_quantity double precision DEFAULT 0.,
-	out_quantity double precision DEFAULT 0.,
+	in_quantity INTEGER DEFAULT 0,
+	out_quantity INTEGER DEFAULT 0,
 	CHECK ( in_quantity >= 0 AND out_quantity >= 0 )
 );

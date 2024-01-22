@@ -5,6 +5,11 @@ import {
   RxDashboard,
   RxPaperPlane,
 } from "react-icons/rx";
+import { MdWork } from "react-icons/md";
+import { GiTeamUpgrade } from "react-icons/gi";
+import { FaUsers } from "react-icons/fa6";
+import { LiaUsersSolid } from "react-icons/lia";
+import { MdMultipleStop } from "react-icons/md";
 
 export type NavElement = {
   title: string;
@@ -53,19 +58,19 @@ export const navConfig: NavElement[] = [
       {
         title: "Poste",
         path: "/position",
-        icon: <RxPaperPlane />,
+        icon: <MdWork />,
         onItemClick: () => {},
       },
       {
         title: "Grade",
         path: "/position-grade",
-        icon: <RxPaperPlane />,
+        icon: <GiTeamUpgrade />,
         onItemClick: () => {},
       },
       {
         title: "Employé",
         path: "/employee",
-        icon: <RxPaperPlane />,
+        icon: <FaUsers />,
         onItemClick: () => {},
       },
       {
@@ -77,13 +82,13 @@ export const navConfig: NavElement[] = [
       {
         title: "Activité de voyage",
         path: "/activités-voyage",
-        icon: <RxPaperPlane />,
+        icon: <RxActivityLog />,
         onItemClick: () => {},
       },
       {
         title: "Employé de voyage",
         path: "/employés-voyage",
-        icon: <RxPaperPlane />,
+        icon: <LiaUsersSolid />,
         onItemClick: () => {},
       },
     ],
@@ -94,7 +99,7 @@ export const navConfig: NavElement[] = [
       {
         title: "Mouvement",
         path: "/movement",
-        icon: <RxPaperPlane />,
+        icon: <MdMultipleStop />,
         onItemClick: () => {},
       },
     ],

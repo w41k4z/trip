@@ -139,7 +139,7 @@ JOIN total_travel_employee_salaries
 CREATE VIEW stock_state AS
 SELECT 
     activities.id AS activity_id,
-    COALESCE(SUM(in_quantity) - SUM(out_quantity), 0) AS remaining_quantity
+    SUM(COALESCE(in_quantity, 0)) - SUM(COALESCE(out_quantity, 0)) AS remaining_quantity
 FROM stock_movement
 RIGHT JOIN activities
     ON activities.id = stock_movement.activity_id

@@ -49,18 +49,6 @@ const EntryMovement = ({ className = "" }: { className?: string }) => {
           {...register("quantity")}
         />
       </div>
-      <div className="mt-3 col-auto col-lg-12">
-        <label className="form-label" htmlFor="unitPrice">
-          Prix unitaire
-        </label>
-        <input
-          className="form-control"
-          type="number"
-          step="0.01"
-          id="unitPrice"
-          {...register("unitPrice")}
-        />
-      </div>
       <div className="d-flex justify-content-end mt-5">
         <button className="btn btn-outline-dark">Ajouter</button>
       </div>

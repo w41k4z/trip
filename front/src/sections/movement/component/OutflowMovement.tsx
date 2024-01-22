@@ -1,3 +1,4 @@
+import { addOutflowMovement } from "../logic";
 import useOutflowMovement from "./useOutflowMovement";
 
 const OutflowMovement = ({ className = "" }: { className?: string }) => {
@@ -13,7 +14,7 @@ const OutflowMovement = ({ className = "" }: { className?: string }) => {
     <form
       className={className}
       onSubmit={handleSubmit((data) => {
-        // addEntryMovement(data);
+        addOutflowMovement(data);
         reset();
       })}
     >

@@ -31,6 +31,7 @@ public class StockMovementController {
 
         entryMovement.setActivity(activity);
         entryMovement.setInQuantity(Integer.valueOf(jsonData.get("quantity").toString()));
+        entryMovement.setOutQuantity(0);
         entryMovement.setActionDate(new Timestamp(System.currentTimeMillis()));
         entryMovement.create(connection);
 
@@ -43,23 +44,25 @@ public class StockMovementController {
         DatabaseConnection connection = ConnectionManager.getDatabaseConnection();
         Integer quantity = Integer.valueOf(jsonData.get("quantity").toString());
         Condition condition = Condition.WHERE("travel_id__of__travel_activity_stock_state", Operator.E,
-                jsonData.get("travel_id"));
+                jsonData.get("travelId"));
         TravelActivityStockStateView[] travelActivityStates = new TravelActivityStockStateView().findAll(connection,
                 condition);
 
         for (TravelActivityStockStateView travelActivityStockState : travelActivityStates) {
             if (travelActivityStockState.getRemainingQuantity() < travelActivityStockState.getActivityCount()
                     * quantity) {
+                connection.rollback();
                 throw new Exception("Stock insuffisant. Il vous faut "
                         + ((travelActivityStockState.getActivityCount() * quantity)
                                 - travelActivityStockState.getRemainingQuantity())
-                        + " d'activité: " + travelActivityStockState.getActivity());
+                        + " billet d'activité: " + travelActivityStockState.getActivity() + " de plus.");
             }
             StockMovement outflowMovement = new StockMovement();
             Activity activity = new Activity();
             activity.setId(travelActivityStockState.getActivityId());
 
             outflowMovement.setActivity(activity);
+            outflowMovement.setInQuantity(0);
             outflowMovement.setOutQuantity(travelActivityStockState.getActivityCount() * quantity);
             outflowMovement.setActionDate(new Timestamp(System.currentTimeMillis()));
 
