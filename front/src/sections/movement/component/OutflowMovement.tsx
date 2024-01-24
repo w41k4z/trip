@@ -2,7 +2,8 @@ import { addOutflowMovement } from "../logic";
 import useOutflowMovement from "./useOutflowMovement";
 
 const OutflowMovement = ({ className = "" }: { className?: string }) => {
-  const { handleSubmit, register, reset, travels } = useOutflowMovement();
+  const { handleSubmit, register, reset, travels, errors, setError } =
+    useOutflowMovement();
 
   let travelOptions: [string, string][] = [];
   // eslint-disable-next-line array-callback-return
@@ -14,7 +15,7 @@ const OutflowMovement = ({ className = "" }: { className?: string }) => {
     <form
       className={className}
       onSubmit={handleSubmit((data) => {
-        addOutflowMovement(data);
+        addOutflowMovement(data, setError);
         reset();
       })}
     >
@@ -48,6 +49,11 @@ const OutflowMovement = ({ className = "" }: { className?: string }) => {
       <div className="d-flex justify-content-end mt-5">
         <button className="btn btn-outline-dark">Valider</button>
       </div>
+      {errors?.global && (
+        <p className="alert alert-danger mt-2" role="alert">
+          {errors.global?.message?.toString()}
+        </p>
+      )}
     </form>
   );
 };

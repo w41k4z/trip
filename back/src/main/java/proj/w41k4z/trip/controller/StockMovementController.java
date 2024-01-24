@@ -40,7 +40,7 @@ public class StockMovementController {
     }
 
     @PostMapping("/out")
-    public void out(@RequestBody Map<String, Object> jsonData) throws Exception {
+    public String out(@RequestBody Map<String, Object> jsonData) throws Exception {
         DatabaseConnection connection = ConnectionManager.getDatabaseConnection();
         Integer quantity = Integer.valueOf(jsonData.get("quantity").toString());
         Condition condition = Condition.WHERE("travel_id__of__travel_activity_stock_state", Operator.E,
@@ -52,10 +52,10 @@ public class StockMovementController {
             if (travelActivityStockState.getRemainingQuantity() < travelActivityStockState.getActivityCount()
                     * quantity) {
                 connection.rollback();
-                throw new Exception("Stock insuffisant. Il vous faut "
+                return "Stock insuffisant. Il vous faut "
                         + ((travelActivityStockState.getActivityCount() * quantity)
                                 - travelActivityStockState.getRemainingQuantity())
-                        + " billet d'activité: " + travelActivityStockState.getActivity() + " de plus.");
+                        + " billet d'activité: " + travelActivityStockState.getActivity() + " de plus.";
             }
             StockMovement outflowMovement = new StockMovement();
             Activity activity = new Activity();
@@ -71,6 +71,7 @@ public class StockMovementController {
 
         connection.commit();
         connection.close();
+        return "";
     }
 
     @GetMapping("/stock-states")

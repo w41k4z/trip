@@ -7,11 +7,11 @@ const StockState = () => {
   const { loading, stocks } = useStockState();
 
   return (
-    <>
+    <div className="mt-5">
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <GenericTable
+          <GenericTable
           hasAction={tableAction}
           indexedRow
           title="Les etats de stocks"
@@ -19,7 +19,7 @@ const StockState = () => {
           data={stocks}
         />
       )}
-    </>
+    </div>
   );
 };
 

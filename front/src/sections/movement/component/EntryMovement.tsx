@@ -2,7 +2,8 @@ import useEntryMovement from "./useEntryMovement";
 import { addEntryMovement } from "../logic";
 
 const EntryMovement = ({ className = "" }: { className?: string }) => {
-  const { register, handleSubmit, reset, activities } = useEntryMovement();
+  const { register, handleSubmit, reset, activities, isSubmitting } =
+    useEntryMovement();
 
   let activityOptions: [string, string][] = [];
   // eslint-disable-next-line array-callback-return
@@ -50,7 +51,9 @@ const EntryMovement = ({ className = "" }: { className?: string }) => {
         />
       </div>
       <div className="d-flex justify-content-end mt-5">
-        <button className="btn btn-outline-dark">Ajouter</button>
+        <button disabled={isSubmitting} className="btn btn-outline-dark">
+          Ajouter
+        </button>
       </div>
     </form>
   );

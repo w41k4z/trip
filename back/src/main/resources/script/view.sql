@@ -18,43 +18,75 @@ LEFT JOIN activity_unit_price
     AND activity_unit_price.from_date = aup.from_date
 ;
 
+CREATE VIEW latest_employee_hourly_wage AS
+SELECT 
+    employee.id AS employee_id,
+    COALESCE(employee_hourly_wage.salary, 0.) AS salary,
+    COALESCE(employee_hourly_wage.from_date, NOW()) AS from_date
+FROM employee
+LEFT JOIN (
+    SELECT 
+        employee_hourly_wage.id,
+        employee_hourly_wage.employee_id,
+        MAX(employee_hourly_wage.from_date) AS from_date
+    FROM employee_hourly_wage
+    GROUP BY
+        employee_hourly_wage.id
+) AS ehw
+    ON employee.id = ehw.employee_id
+LEFT JOIN employee_hourly_wage
+    ON ehw.id = employee_hourly_wage.id
+    AND ehw.from_date = employee_hourly_wage.from_date 
+;
+
+CREATE VIEW latest_employee_position AS
+SELECT
+    employee.id AS employee_id,
+    employee_position.position_id,
+    employee_position.from_date
+FROM employee
+JOIN (
+    SELECT
+        employee_position.id,
+        employee_position.employee_id,
+        MAX(employee_position.from_date) AS from_date
+    FROM employee_position
+    GROUP BY 
+        employee_position.id
+) AS ep
+    ON employee.id = ep.employee_id
+JOIN employee_position
+    ON employee_position.id = ep.id
+    AND employee_position.from_date = ep.from_date
+;
+
 CREATE VIEW employee_salaries AS
 SELECT
     employee.*,
-    COALESCE(hourly_wage.salary, 0.) AS salary,
-    COALESCE(hw.from_date, NOW()) AS from_date
+    latest_employee_position.position_id,
+    grade.id AS grade_id,
+    latest_employee_hourly_wage.salary + (latest_employee_hourly_wage.salary * grade.increase / 100) AS salary
 FROM employee
-JOIN position_grade 
-    ON position_grade.id = employee.position_grade_id
-JOIN position 
-    ON position.id = position_grade.position_id
-LEFT JOIN (
-    SELECT 
-        hourly_wage.position_id,
-        MAX(hourly_wage.from_date) AS from_date
-    FROM hourly_wage
-    GROUP BY
-        hourly_wage.position_id
-) AS hw
-    ON hw.position_id = position.id
-LEFT JOIN hourly_wage 
-    ON hourly_wage.position_id = hw.position_id
-    AND hourly_wage.from_date = hw.from_date
+JOIN latest_employee_position
+    ON latest_employee_position.employee_id = employee.id
+JOIN latest_employee_hourly_wage
+    ON latest_employee_hourly_wage.employee_id = employee.id
+JOIN grade 
+    ON EXTRACT(YEAR FROM AGE(NOW(), employee.hiring_date)) BETWEEN grade.from_duration AND COALESCE(grade.to_duration, ('infinity'::float))
 ;
 
 CREATE VIEW employees AS
 SELECT 
     employee.*,
-    CONCAT(position.name, ' ', position_grade.grade) AS position_grade,
-    (employee_salaries.salary + (employee_salaries.salary * position_grade.increase)) AS salary,
-    employee_salaries.from_date
+    CONCAT(position.name, ' ', grade.name) AS position_grade,
+    employee_salaries.salary
 FROM employee
 JOIN employee_salaries
     ON employee_salaries.id = employee.id
-JOIN position_grade
-    ON employee.position_grade_id = position_grade.id
 JOIN position
-    ON position_grade.position_id = position.id
+    ON employee_salaries.position_id = position.id
+JOIN grade
+    ON employee_salaries.grade_id = grade.id
 ;
 
 CREATE VIEW travel_activities AS
@@ -127,12 +159,12 @@ SELECT
     travel.travel_category_id,
     travel.subscription_tier_id,
     travel.sale_price,
-    total_travel_activities_price.total_price + total_travel_employee_salaries.total_salary AS total_price,
+    COALESCE(total_travel_activities_price.total_price, 0) + COALESCE(total_travel_employee_salaries.total_salary, 0) AS total_price,
     travel.sale_price - total_travel_activities_price.total_price - total_travel_employee_salaries.total_salary AS profit
 FROM travel
-JOIN total_travel_activities_price
+LEFT JOIN total_travel_activities_price
     ON total_travel_activities_price.travel_id = travel.id
-JOIN total_travel_employee_salaries
+LEFT JOIN total_travel_employee_salaries
     ON total_travel_employee_salaries.travel_id = travel.id
 ;
 

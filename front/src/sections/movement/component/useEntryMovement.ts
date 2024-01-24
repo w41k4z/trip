@@ -7,11 +7,20 @@ const useEntryMovement = () => {
   const {
     register,
     handleSubmit,
-    // formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting },
     reset,
+    setError,
   } = useForm();
 
-  return { register, handleSubmit, activities, reset };
+  return {
+    register,
+    handleSubmit,
+    activities,
+    reset,
+    errors,
+    isSubmitting,
+    setError,
+  };
 };
 
 export default useEntryMovement;

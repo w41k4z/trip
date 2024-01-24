@@ -1,5 +1,7 @@
 package proj.w41k4z.trip.entity;
 
+import java.sql.Timestamp;
+
 import proj.w41k4z.orm.annotation.Column;
 import proj.w41k4z.orm.annotation.Entity;
 import proj.w41k4z.orm.annotation.Generated;
@@ -20,8 +22,8 @@ public class Employee extends Repository<Employee, Long> {
     @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "position_grade_id")
-    private Long positionGradeId;
+    @Column(name = "hiring_date")
+    private Timestamp hiringDate;
 
     public Long getId() {
         return id;
@@ -47,11 +49,12 @@ public class Employee extends Repository<Employee, Long> {
         this.firstName = firstName;
     }
 
-    public Long getPositionGradeId() {
-        return positionGradeId;
+    public Timestamp getHiringDate() {
+        return hiringDate;
     }
 
-    public void setPositionGradeId(Long positionGradeId) {
-        this.positionGradeId = positionGradeId;
+    public void setHiringDate(Timestamp hiringDate) {
+        this.hiringDate = hiringDate;
     }
+
 }

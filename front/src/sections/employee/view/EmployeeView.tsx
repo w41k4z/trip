@@ -3,19 +3,13 @@ import { tableAction } from "../table-action";
 import { tableColumns } from "../table-column";
 import useEmployee from "../useEmployee";
 
-const GradeView = () => {
-  const { positionsGrades, employees, loading } = useEmployee();
+const EmployeeView = () => {
+  const { positions, employees, loading } = useEmployee();
 
-  let positionsGradesOptions: [string, string][] = [["-1", "Choose"]];
+  let positionOptions: [string, string][] = [["-1", "Choose"]];
   // eslint-disable-next-line array-callback-return
-  positionsGrades?.map((positionGrades) => {
-    let positionName = positionGrades.position
-      ? positionGrades?.position.name
-      : "";
-    positionsGradesOptions.push([
-      positionGrades.id.toString(),
-      positionName + " " + positionGrades.grade,
-    ]);
+  positions?.map((position) => {
+    positionOptions.push([position.id.toString(), position.name]);
   });
 
   return (
@@ -24,7 +18,7 @@ const GradeView = () => {
         <div>Loading...</div>
       ) : (
         <GenericTable
-          hasAction={tableAction(positionsGradesOptions)}
+          hasAction={tableAction(positionOptions)}
           indexedRow
           title="Les employés"
           columns={tableColumns}
@@ -35,4 +29,4 @@ const GradeView = () => {
   );
 };
 
-export default GradeView;
+export default EmployeeView;

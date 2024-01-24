@@ -38,26 +38,37 @@ CREATE TABLE position (
     name VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE hourly_wage (
+CREATE TABLE grade (
     id SERIAL PRIMARY KEY,
-    from_date TIMESTAMP NOT NULL,
-    position_id INTEGER REFERENCES position(id),
-    salary DOUBLE PRECISION DEFAULT 0. 
-);
-
-CREATE TABLE position_grade (
-    id SERIAL PRIMARY KEY,
-    position_id INTEGER REFERENCES position(id) NOT NULL,
-    grade varchar(50) NOT NULL,
+    name VARCHAR(50) NOT NULL UNIQUE,
     increase DOUBLE PRECISION DEFAULT 0., -- 0 -> 1 (100%)
-    CONSTRAINT unique_position_grade UNIQUE (position_id, grade)
+    from_duration DOUBLE PRECISION DEFAULT 0. NOT NULL,
+    to_duration DOUBLE PRECISION DEFAULT 0.,
+    CHECK (from_duration >= 0 AND to_duration > from_duration),
+    CONSTRAINT unique_grade_1 UNIQUE (name, from_duration),
+    CONSTRAINT unique_grade_2 UNIQUE (name, to_duration)
 );
 
 CREATE TABLE employee (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     first_name VARCHAR(50),
-    position_grade_id INTEGER REFERENCES position_grade(id) NOT NULL
+    hiring_date TIMESTAMP NOT NULL
+);
+
+CREATE TABLE employee_hourly_wage (
+    id SERIAL PRIMARY KEY,
+    employee_id INTEGER REFERENCES employee(id) NOT NULL,
+    from_date TIMESTAMP NOT NULL,
+    salary DOUBLE PRECISION DEFAULT 0. 
+);
+
+CREATE TABLE employee_position (
+    id SERIAL PRIMARY KEY,
+    employee_id INTEGER REFERENCES employee(id) NOT NULL,
+    position_id INTEGER REFERENCES position(id) NOT NULL,
+    from_date TIMESTAMP NOT NULL,
+    CONSTRAINT uq_employee_position UNIQUE(employee_id, from_date)
 );
 
 CREATE TABLE travel_category (

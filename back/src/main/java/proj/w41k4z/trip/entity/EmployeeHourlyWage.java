@@ -8,25 +8,33 @@ import proj.w41k4z.orm.annotation.Generated;
 import proj.w41k4z.orm.annotation.Id;
 import proj.w41k4z.orm.database.Repository;
 
-@Entity(table = "hourly_wage")
-public class HourlyWage extends Repository<HourlyWage, Long> {
+@Entity(table = "employee_hourly_wage")
+public class EmployeeHourlyWage extends Repository<EmployeeHourlyWage, Long> {
 
     @Id
     @Column
     @Generated
     private Long id;
 
+    @Column(name = "employee_id")
+    private Long employeeId;
+
     @Column(name = "from_date")
     private Timestamp fromDate;
-
-    @Column(name = "position_id")
-    private Long positionId;
 
     @Column
     private Double salary;
 
     public Long getId() {
         return id;
+    }
+
+    public Long getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
     }
 
     public void setId(Long id) {
@@ -41,14 +49,6 @@ public class HourlyWage extends Repository<HourlyWage, Long> {
         this.fromDate = fromDate;
     }
 
-    public Long getPositionId() {
-        return positionId;
-    }
-
-    public void setPositionId(Long positionId) {
-        this.positionId = positionId;
-    }
-
     public Double getSalary() {
         return salary;
     }
@@ -56,5 +56,4 @@ public class HourlyWage extends Repository<HourlyWage, Long> {
     public void setSalary(Double salary) {
         this.salary = salary;
     }
-
 }

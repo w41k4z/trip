@@ -6,10 +6,10 @@ import {
   RxPaperPlane,
 } from "react-icons/rx";
 import { MdWork } from "react-icons/md";
-import { GiTeamUpgrade } from "react-icons/gi";
 import { FaUsers } from "react-icons/fa6";
 import { LiaUsersSolid } from "react-icons/lia";
 import { MdMultipleStop } from "react-icons/md";
+import { GiTeamUpgrade } from "react-icons/gi";
 
 export type NavElement = {
   title: string;
@@ -56,15 +56,15 @@ export const navConfig: NavElement[] = [
         onItemClick: () => {},
       },
       {
-        title: "Poste",
-        path: "/position",
-        icon: <MdWork />,
+        title: "Grade",
+        path: "/grade",
+        icon: <GiTeamUpgrade />,
         onItemClick: () => {},
       },
       {
-        title: "Grade",
-        path: "/position-grade",
-        icon: <GiTeamUpgrade />,
+        title: "Poste",
+        path: "/position",
+        icon: <MdWork />,
         onItemClick: () => {},
       },
       {

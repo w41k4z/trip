@@ -1,3 +1,4 @@
+import { FieldValues, UseFormSetError } from "react-hook-form";
 import axios from "../../axios";
 import { StockState } from "./component/type";
 
@@ -28,11 +29,20 @@ export const addEntryMovement = async (data: any) => {
     });
 };
 
-export const addOutflowMovement = async (data: any) => {
+export const addOutflowMovement = async (
+  data: any,
+  setError: UseFormSetError<FieldValues>
+) => {
   await axios
     .post("/stock-movements/out", data)
     .then((response) => {
-      alert("Mouvement de sortie ajouté");
+      if (response.data) {
+        setError("global", {
+          message: response.data,
+        });
+      } else {
+        alert("Mouvement de sortie ajouté");
+      }
     })
     .catch((error) => {
       alert(error);

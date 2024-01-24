@@ -1,7 +1,7 @@
 import { TableActionType } from "../../components/datatable/GenericTable";
 import { addEmployee } from "./logic";
 
-export const tableAction = (positionsGradesOptions: [string, string][]) => {
+export const tableAction = (positionOptions: [string, string][]) => {
   const tableAction: TableActionType = {
     addAction: {
       formTitle: "Ajouter un nouveau employé",
@@ -20,10 +20,21 @@ export const tableAction = (positionsGradesOptions: [string, string][]) => {
           label: "Prenom",
         },
         {
-          name: "positionGradeId",
+          name: "positionId",
           label: "Poste",
           type: "select",
-          selectValues: positionsGradesOptions,
+          selectValues: positionOptions,
+        },
+        {
+          name: "hiringDate",
+          label: "Date d'embauche",
+          type: "date"
+        },
+        {
+          name: "salary",
+          label: "Tarif horaire",
+          type: "number",
+          step: "0,01",
         },
       ],
       onSubmit: async (data) => {
