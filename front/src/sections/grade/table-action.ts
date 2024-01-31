@@ -16,11 +16,15 @@ export const tableAction = () => {
         },
         {
           name: "increase",
-          label: "Majoration (x 100%)",
+          label: "Majoration (%)",
           type: "number",
           step: ".01",
           options: {
             required: "La majoration est requise",
+            min: {
+              value: 0,
+              message: "La majoration minimum doit etre superieur ou egale à 0",
+            },
           },
         },
         {
@@ -30,13 +34,17 @@ export const tableAction = () => {
           step: "0.1",
           options: {
             required: "La durée minimum est requise",
+            min: {
+              value: 0,
+              message: "La durée minimum doit etre superieur ou egale à 0",
+            },
           },
         },
         {
           name: "toDuration",
           label: "EXP maximum",
           type: "number",
-          step: "0.1"
+          step: "0.1",
         },
       ],
       onSubmit: async (data) => {

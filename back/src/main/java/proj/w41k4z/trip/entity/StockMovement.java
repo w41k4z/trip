@@ -59,7 +59,9 @@ public class StockMovement extends Repository<StockMovement, Long> {
     }
 
     public void setInQuantity(Integer inQuantity) {
-        this.inQuantity = inQuantity;
+        if (inQuantity != null && inQuantity >= 0) {
+            this.inQuantity = inQuantity;
+        }
     }
 
     public Integer getOutQuantity() {
@@ -67,6 +69,8 @@ public class StockMovement extends Repository<StockMovement, Long> {
     }
 
     public void setOutQuantity(Integer outQuantity) {
-        this.outQuantity = outQuantity;
+        if (outQuantity != null && outQuantity >= 0) {
+            this.outQuantity = outQuantity;
+        }
     }
 }

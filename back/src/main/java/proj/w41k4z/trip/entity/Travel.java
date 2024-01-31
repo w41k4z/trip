@@ -78,6 +78,8 @@ public class Travel extends Repository<Travel, Long> {
     }
 
     public void setSalePrice(Double salePrice) {
-        this.salePrice = salePrice;
+        if (salePrice >= 0) {
+            this.salePrice = salePrice;
+        }
     }
 }

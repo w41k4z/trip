@@ -160,7 +160,7 @@ SELECT
     travel.subscription_tier_id,
     travel.sale_price,
     COALESCE(total_travel_activities_price.total_price, 0) + COALESCE(total_travel_employee_salaries.total_salary, 0) AS total_price,
-    travel.sale_price - total_travel_activities_price.total_price - total_travel_employee_salaries.total_salary AS profit
+    travel.sale_price - COALESCE(total_travel_activities_price.total_price, 0) - COALESCE(total_travel_employee_salaries.total_salary, 0) AS profit
 FROM travel
 LEFT JOIN total_travel_activities_price
     ON total_travel_activities_price.travel_id = travel.id
@@ -187,4 +187,76 @@ SELECT
 FROM travel_activities
 JOIN stock_state
     ON stock_state.activity_id = travel_activities.activity_id
+;
+
+CREATE VIEW travel_reservation_statistic AS
+SELECT
+    travel.id AS travel_id,
+    duration.id AS duration_id,
+    travel_category.id AS category_id,
+    SUM(COALESCE(client_reservation.quantity, 0)) AS total_reservation
+FROM travel 
+LEFT JOIN client_reservation
+    ON client_reservation.travel_id = travel.id
+JOIN subscription_tier
+    ON subscription_tier.id = travel.subscription_tier_id
+JOIN duration
+    ON duration.id = travel.duration_id
+JOIN travel_category
+    ON travel_category.id = travel.travel_category_id
+GROUP BY
+    travel.id,
+    duration.id,
+    travel_category.id
+;
+
+CREATE VIEW travel_male_reservation_statistic AS
+SELECT 
+    client_reservation.travel_id,
+    SUM(client_reservation.quantity) AS male_reservation
+FROM client_reservation
+JOIN client 
+    ON client.id = client_reservation.client_id
+WHERE client.genre = 2
+GROUP BY client_reservation.travel_id
+;
+
+CREATE VIEW travel_female_reservation_statistic AS
+SELECT 
+    client_reservation.travel_id,
+    SUM(client_reservation.quantity) AS female_reservation
+FROM client_reservation
+JOIN client 
+    ON client.id = client_reservation.client_id
+WHERE client.genre = 1
+GROUP BY client_reservation.travel_id
+;
+
+CREATE VIEW travel_reservation_genre_statistic AS
+SELECT
+    travel_reservation_statistic.travel_id,
+    travel.name AS travel_name,
+    duration.label AS duration,
+    travel_category.category,
+    (COALESCE(travel_male_reservation_statistic.male_reservation, 0) * 100) / 
+        CASE 
+            WHEN travel_reservation_statistic.total_reservation = 0 THEN 1
+            ELSE travel_reservation_statistic.total_reservation 
+            END AS male_effective,
+    (COALESCE(travel_female_reservation_statistic.female_reservation, 0) * 100) / 
+        CASE 
+            WHEN travel_reservation_statistic.total_reservation = 0 THEN 1
+            ELSE travel_reservation_statistic.total_reservation
+            END AS female_effective
+FROM travel_reservation_statistic
+LEFT JOIN travel_male_reservation_statistic
+    ON travel_male_reservation_statistic.travel_id = travel_reservation_statistic.travel_id
+LEFT JOIN travel_female_reservation_statistic
+    ON travel_female_reservation_statistic.travel_id = travel_reservation_statistic.travel_id
+JOIN travel
+    ON travel.id = travel_reservation_statistic.travel_id
+JOIN duration
+    ON duration.id = travel_reservation_statistic.duration_id
+JOIN travel_category
+    ON travel_category.id = travel_reservation_statistic.category_id
 ;

@@ -55,6 +55,8 @@ public class TravelActivity extends Repository<TravelActivity, Long> {
     }
 
     public void setActivityCount(Integer activityCount) {
-        this.activityCount = activityCount;
+        if (activityCount > 0) {
+            this.activityCount = activityCount;
+        }
     }
 }

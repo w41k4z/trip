@@ -42,6 +42,13 @@ export const tableAction = (
           type: "number",
           defaultValue: 0,
           step: "0.01",
+          options: {
+            required: "Le prix de vente est obligatoire",
+            min: {
+              value: 0,
+              message: "Le prix de vente doit etre superieur à 0",
+            },
+          },
         },
       ],
       onSubmit: async (data) => {

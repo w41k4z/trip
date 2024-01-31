@@ -28,13 +28,24 @@ export const tableAction = (positionOptions: [string, string][]) => {
         {
           name: "hiringDate",
           label: "Date d'embauche",
-          type: "date"
+          type: "date",
+          options: {
+            required: "La date d'embauche d'un nouveau employé est obligatoire",
+          },
         },
         {
           name: "salary",
           label: "Tarif horaire",
           type: "number",
           step: "0,01",
+          options: {
+            required:
+              "Le tarif horaire d'embauche d'un nouveau employé est obligatoire",
+            min: {
+              value: 0,
+              message: "Le tarif horaire doit etre superieur à 0",
+            },
+          },
         },
       ],
       onSubmit: async (data) => {

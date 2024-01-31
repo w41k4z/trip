@@ -68,6 +68,24 @@ export const navConfig: NavElement[] = [
         onItemClick: () => {},
       },
       {
+        title: "Client",
+        path: "/client",
+        icon: <FaUsers />,
+        onItemClick: () => {},
+      },
+      {
+        title: "Reservation client",
+        path: "/client-reservation",
+        icon: <FaUsers />,
+        onItemClick: () => {},
+      },
+      {
+        title: "Stat",
+        path: "/genre-stat",
+        icon: <FaUsers />,
+        onItemClick: () => {},
+      },
+      {
         title: "Employé",
         path: "/employee",
         icon: <FaUsers />,

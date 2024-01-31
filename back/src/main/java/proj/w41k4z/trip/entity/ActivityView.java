@@ -4,20 +4,23 @@ import java.sql.Timestamp;
 
 import proj.w41k4z.orm.annotation.Column;
 import proj.w41k4z.orm.annotation.Entity;
-import proj.w41k4z.orm.annotation.Generated;
 import proj.w41k4z.orm.annotation.Id;
+import proj.w41k4z.orm.annotation.ReadOnly;
 import proj.w41k4z.orm.database.Repository;
 
-@Entity(table = "activity_unit_price")
-public class ActivityUnitPrice extends Repository<ActivityUnitPrice, Long> {
+@Entity(table = "activities")
+@ReadOnly
+public class ActivityView extends Repository<ActivityView, Long> {
 
     @Id
     @Column
-    @Generated
     private Long id;
 
-    @Column(name = "activity_id")
-    private Long activityId;
+    @Column
+    private String name;
+
+    @Column
+    private String description;
 
     @Column(name = "unit_price")
     private Double unitPrice;
@@ -33,12 +36,20 @@ public class ActivityUnitPrice extends Repository<ActivityUnitPrice, Long> {
         this.id = id;
     }
 
-    public Long getActivityId() {
-        return activityId;
+    public String getName() {
+        return name;
     }
 
-    public void setActivityId(Long activityId) {
-        this.activityId = activityId;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Double getUnitPrice() {
@@ -46,9 +57,7 @@ public class ActivityUnitPrice extends Repository<ActivityUnitPrice, Long> {
     }
 
     public void setUnitPrice(Double unitPrice) {
-        if (unitPrice != null && unitPrice >= 0) {
-            this.unitPrice = unitPrice;
-        }
+        this.unitPrice = unitPrice;
     }
 
     public Timestamp getFromDate() {

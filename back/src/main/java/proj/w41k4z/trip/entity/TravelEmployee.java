@@ -54,6 +54,8 @@ public class TravelEmployee extends Repository<TravelEmployee, Long> {
     }
 
     public void setDuration(Double duration) {
-        this.duration = duration;
+        if (duration > 0) {
+            this.duration = duration;
+        }
     }
 }

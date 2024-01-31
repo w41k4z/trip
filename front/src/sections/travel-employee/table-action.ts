@@ -26,6 +26,13 @@ export const tableAction = (
           label: "Durée (heure)",
           type: "number",
           step: "0.01",
+          options: {
+            required: "Le nombre d'heure est obligatoire",
+            min: {
+              value: 0,
+              message: "Le nombre d'heure doit etre superieur à 0",
+            },
+          },
         },
       ],
       onSubmit: async (data) => {

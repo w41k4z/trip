@@ -18,6 +18,7 @@ CREATE TABLE activity_unit_price (
     activity_id INTEGER NOT NULL REFERENCES activity(id),
     unit_price DOUBLE PRECISION NOT NULL,
     from_date TIMESTAMP NOT NULL,
+    CHECK(unit_price >= 0),
     CONSTRAINT unique_activity_unit_price UNIQUE(activity_id, unit_price, from_date)
 );
 
@@ -41,7 +42,7 @@ CREATE TABLE position (
 CREATE TABLE grade (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE,
-    increase DOUBLE PRECISION DEFAULT 0., -- 0 -> 1 (100%)
+    increase DOUBLE PRECISION DEFAULT 0. NOT NULL, -- 0 -> 1 (100%)
     from_duration DOUBLE PRECISION DEFAULT 0. NOT NULL,
     to_duration DOUBLE PRECISION DEFAULT 0.,
     CHECK (from_duration >= 0 AND to_duration > from_duration),
@@ -60,7 +61,8 @@ CREATE TABLE employee_hourly_wage (
     id SERIAL PRIMARY KEY,
     employee_id INTEGER REFERENCES employee(id) NOT NULL,
     from_date TIMESTAMP NOT NULL,
-    salary DOUBLE PRECISION DEFAULT 0. 
+    salary DOUBLE PRECISION DEFAULT 0.,
+    CHECK (salary >= 0)
 );
 
 CREATE TABLE employee_position (
@@ -82,7 +84,8 @@ CREATE TABLE travel (
     duration_id INTEGER REFERENCES duration(id),
     travel_category_id INTEGER REFERENCES travel_category(id),
     subscription_tier_id INTEGER REFERENCES subscription_tier(id),
-    sale_price DOUBLE PRECISION NOT NULL
+    sale_price DOUBLE PRECISION NOT NULL,
+    CHECK(sale_price >= 0)
 );
 
 CREATE TABLE travel_activity (
@@ -90,6 +93,7 @@ CREATE TABLE travel_activity (
     travel_id INTEGER REFERENCES travel(id),
     tier_activity_id INTEGER REFERENCES tier_activity(id),
     activity_count INTEGER NOT NULL,
+    CHECK(activity_count > 0),
     CONSTRAINT unique_travel_activity UNIQUE (travel_id, tier_activity_id)
 );
 
@@ -97,7 +101,8 @@ CREATE TABLE travel_employee (
     id SERIAL PRIMARY KEY,
     travel_id INTEGER REFERENCES travel(id) NOT NULL,
     employee_id INTEGER REFERENCES employee(id) NOT NULL,
-    duration DOUBLE PRECISION DEFAULT 1.
+    duration DOUBLE PRECISION DEFAULT 1.,
+    CHECK(duration > 0)
 );
 
 CREATE TABLE stock_movement ( 
@@ -106,5 +111,22 @@ CREATE TABLE stock_movement (
     activity_id INTEGER NOT NULL REFERENCES activity(id),
 	in_quantity INTEGER DEFAULT 0,
 	out_quantity INTEGER DEFAULT 0,
-	CHECK ( in_quantity >= 0 AND out_quantity >= 0 )
+	CHECK (in_quantity >= 0 AND out_quantity >= 0)
+);
+
+CREATE TABLE client (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    first_name VARCHAR(50),
+    genre INTEGER NOT NULL,
+    birth_date DATE NOT NULL
+);
+
+CREATE TABLE client_reservation (
+    id SERIAL PRIMARY KEY,
+    client_id INTEGER REFERENCES client(id) NOT NULL,
+    travel_id INTEGER REFERENCES travel(id) NOT NULL,
+    quantity INTEGER NOT NULL,
+    reservation_date TIMESTAMP NOT NULL,
+    CHECK(quantity > 0)
 );

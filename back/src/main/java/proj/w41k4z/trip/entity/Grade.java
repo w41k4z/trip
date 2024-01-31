@@ -55,13 +55,16 @@ public class Grade extends Repository<Grade, Long> {
     }
 
     public void setFromDuration(Double fromDuration) {
-        this.fromDuration = fromDuration;
+        if (fromDuration >= 0) {
+            this.fromDuration = fromDuration;
+        }
     }
 
     public Double getToDuration() {
         return toDuration;
     }
 
+    // NULL: infinite
     public void setToDuration(Double toDuration) {
         this.toDuration = toDuration;
     }

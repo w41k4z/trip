@@ -7,18 +7,18 @@ export const tableColumns: Column[] = [
     format: "default",
   },
   {
-    name: "Description",
-    propTarget: "description",
+    name: "Prenom",
+    propTarget: "firstName",
     format: "default",
   },
   {
-    name: "Derniere date",
-    propTarget: "fromDate",
-    format: "date",
+    name: "Genre",
+    propTarget: "genreString",
+    format: "default",
   },
   {
-    name: "Prix unitaire",
-    propTarget: "unitPrice",
-    format: "currency",
+    name: "Date de naissance",
+    propTarget: "birthDate",
+    format: "date",
   },
 ];

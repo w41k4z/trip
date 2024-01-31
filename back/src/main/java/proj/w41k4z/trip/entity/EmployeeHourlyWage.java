@@ -54,6 +54,8 @@ public class EmployeeHourlyWage extends Repository<EmployeeHourlyWage, Long> {
     }
 
     public void setSalary(Double salary) {
-        this.salary = salary;
+        if (salary >= 0) {
+            this.salary = salary;
+        }
     }
 }

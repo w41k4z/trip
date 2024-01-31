@@ -17,6 +17,13 @@ export const MovementPage = lazy(() => import("./pages/Movement"));
 export const GradePage = lazy(() => import("./pages/Grade"));
 export const PositionPage = lazy(() => import("./pages/Position"));
 export const EmployeePage = lazy(() => import("./pages/Employee"));
+export const ClientPage = lazy(() => import("./pages/Client"));
+export const ClientReservationPage = lazy(
+  () => import("./pages/ClientReservation")
+);
+export const TravelGenreStatisticPage = lazy(
+  () => import("./pages/TravelGenreStatistic")
+);
 
 export default function Router() {
   const routes = useRoutes([
@@ -73,6 +80,18 @@ export default function Router() {
         {
           path: "employee",
           element: <EmployeePage />,
+        },
+        {
+          path: "client",
+          element: <ClientPage />,
+        },
+        {
+          path: "client-reservation",
+          element: <ClientReservationPage />,
+        },
+        {
+          path: "genre-stat",
+          element: <TravelGenreStatisticPage />,
         },
         {
           path: "movement",

@@ -9,6 +9,7 @@ import proj.w41k4z.orm.database.connectivity.ConnectionManager;
 import proj.w41k4z.orm.database.connectivity.DatabaseConnection;
 import proj.w41k4z.trip.entity.Activity;
 import proj.w41k4z.trip.entity.ActivityUnitPrice;
+import proj.w41k4z.trip.entity.ActivityView;
 
 import java.sql.Timestamp;
 import java.util.Map;
@@ -20,9 +21,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ActivityController {
 
     @GetMapping
-    public Activity[] list() throws Exception {
+    public ActivityView[] list() throws Exception {
         DatabaseConnection connection = ConnectionManager.getDatabaseConnection();
-        Activity[] activities = new Activity().findAll(connection);
+        ActivityView[] activities = new ActivityView().findAll(connection);
         connection.close();
         return activities;
     }
